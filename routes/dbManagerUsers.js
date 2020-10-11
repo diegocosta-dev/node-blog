@@ -17,11 +17,11 @@ const dbManager = {
     },
 
     loginUser: async (req, res, next) => {
-        req.flash('success_msg', 'Logado com sucesso')
         passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/user/login',
-            failureFlash: true
+            failureFlash: true,
+            sucessFlash: "Logado com sucesso"
         })(req, res, next)
     },
 
