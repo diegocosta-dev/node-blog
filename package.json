@@ -1,0 +1,40 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "This is a blog builded with nodejs, express and mongodb.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.7",
+    "passport-local": "^1.0.0",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegocosta-dev/node-blog.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Diego Costa <toiablender@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegocosta-dev/node-blog/issues"
+  },
+  "homepage": "https://github.com/diegocosta-dev/node-blog#readme"
+}
