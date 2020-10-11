@@ -11,4 +11,4 @@
  npm run dev
 
 # set user admin
- db.users.update({ _id: ObjectId("5f833bde19580f3d9751d93c") }, { isAdmin: 1 })
+ db.users.update({ _id: ObjectId("5f833ff70d66a73e81c31a35") }, { $set: { isAdmin: 1 } })
