@@ -1,7 +1,7 @@
 {
   "name": "node-blog",
   "version": "1.0.0",
-  "description": "This is a blog builded with nodejs, express and mongodb",
+  "description": "This is a blog builded with nodejs, express and mongodb.",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.19.0",
