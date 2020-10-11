@@ -1,0 +1,16 @@
+
+<div class="card">
+    <h2 class="card-header text-uppercase">Deletar</h2>
+    <div class="card-body">
+        <h4 class="title">Deseja deletar a categoria {{category.name}}?</h4>
+        <form action="/admin/categories/delete" method="post">
+            <input type="hidden" name="id" value="{{category._id}}">
+            <button type="submit" class="btn btn-danger mt-4">Sim</button>
+            <a href="/admin/categories" class="btn btn-success mt-4">Não</a>
+        </form>
+        
+    </div>
+    
+</div>
+
+

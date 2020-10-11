@@ -1,0 +1,53 @@
+<div class="jumbotron">
+  <h1 class="display-4">Blog do Node</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <a class="btn btn-primary btn-dark" href="/user/register" role="button">Cadastre-se</a>
+</div>
+
+<hr>
+<div class="container">
+  <div class="row">
+    <div class="col-sm p-2">
+      <h4 class="card-header">Postagens recentes</h4>
+      {{#each post}}
+        <div class="shadow p-3 mb-5 bg-white rounded card mt-4 ">
+            <div class="card-body">
+              <h2 class="">{{title}}</h2>
+              <p>{{description}}</p>
+              <small class="d-block p-0 "><strong>Catetegoria:</strong> {{category.name}}</small>
+              <small class="d-block p-0 "><strong>Data de criação:</strong> {{date}}</small>
+
+              <a href="/post/{{slug}}">
+                <button type="button" class="btn btn-primary btn-dark mt-4">Ler mais</button>
+              </a>
+            </div>
+        </div>
+
+      {{else}}
+        <h6 class="mt-4">Não existe postagens cadastradas</h6>
+      {{/each}}
+    </div>
+    <div class="col-md-auto p-2">
+      <h4 class="card-header">Lista de categorias</h4>
+      <div class="shadow p-3 mb-5 bg-white rounded mt-4 ">
+        <ul style='padding-inline-start: 0;'>
+          {{#each categories}}
+            <li class="d-flex justify-content-between align-items-center">
+              <a class='text-decoration-none' href="/category/{{slug}}">{{name}}</a><span class="badge badge-primary badge-pill">{{len}}</span>
+            </li>
+          {{else}}
+            <p>Não existe Categorias registradas</p>
+          {{/each}}
+        </ul>
+      </div>
+      <h4 class="card-header">Principais Noticias</h4>
+      <div class="shadow p-3 mb-5 bg-white rounded mt-4 ">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

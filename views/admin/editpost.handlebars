@@ -1,0 +1,34 @@
+{{#each error}}
+    <div class="alert alert-danger">{{text}}</div>
+{{else}}
+    
+{{/each}}
+
+<div class="card">
+    <h5 class="card-header text-uppercase">Editar post</h5>
+    <div class="card-body">
+        <form action="/admin/posts/edit" method="POST">
+            <input type="hidden" name="id" id="id" value="{{post._id}}">
+            <label for="name">Título: </label>
+                <input value={{post.title}} type="text" id="title" name="title" class="form-control">
+            <label for="slug">Slug: </label>
+                <input value={{post.slug}} onkeydown="Mask.apply(event)" type="text" id="slug" name="slug" class="form-control">
+            <label for="description">Resumo: </label>
+                <input value="{{post.description}}" type="text" id="description" name="description" class="form-control">
+            <label for="content">Conteudo: </label>
+                <textarea class="form-control" name="content" id="content" cols="30" rows="5">{{post.content}}</textarea>
+
+            <label for="category"></label> 
+            <select name="category" id="category" class="custom-select">
+                
+                {{#each categories}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{else}}
+                    <option value="0">Não existe categorias</option>
+                {{/each}}
+            </select>
+
+            <button type="submit" class="btn btn-success mt-4">Editar Post</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+
+<h2 class="mb-3 ">{{categorie.name}}</h2>
+{{#each post}}
+    <div class="card mb-5">
+        <div class="card-body">
+            <h6>{{title}}</h6>
+            <p>{{description}}</p>
+            <small class="d-block"><strong>Data: </strong>{{date}}</small>
+            <a href="/post/{{slug}}"><button class="btn btn-primary btn-dark mt-4">Ler mais</button></a>
+        </div>
+    </div>
+{{else}}
+    <h6>Não existe postagens cadastradas</h6>
+{{/each}}

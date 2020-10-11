@@ -1,0 +1,33 @@
+{{#each error}}
+<div class="alert alert-danger">{{text}}</div>
+{{else}}
+    
+{{/each}}
+
+<div class="card">
+    <h5 class="card-header text-uppercase">Criar novo post</h5>
+    <div class="card-body">
+        <form action="/admin/posts/new" method="POST">
+            <label for="name">Título: </label>
+                <input type="text" id="title" name="title" class="form-control">
+            <label for="slug">Slug: </label>
+                <input onkeydown="Mask.apply(event)" type="text" id="slug" name="slug" class="form-control">
+            <label for="description">Resumo: </label>
+                <input type="text" id="description" name="description" class="form-control">
+            <label for="content">Conteudo: </label>
+                <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
+
+            <label for="category"></label> 
+            <select name="category" id="category" class="custom-select">
+                
+                {{#each categories}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{else}}
+                    <option value="0">Não existe categorias</option>
+                {{/each}}
+            </select>
+
+            <button type="submit" class="btn btn-success mt-4">Criar Post</button>
+        </form>
+    </div>
+</div>

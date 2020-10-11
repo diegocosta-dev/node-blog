@@ -1,0 +1,18 @@
+{{#each error}}
+    <div class="alert alert-danger">{{text}}</div>
+{{else}}
+    
+{{/each}}
+
+<div class="card">
+    <h5 class="card-header text-uppercase">Criar nova categoria</h5>
+    <div class="card-body">
+        <form action="/admin/categories/new" method="POST">
+            <label for="name">Nome: </label>
+                <input type="text" id="name" name="name" placeholder="Nome da Categoria" class="form-control">
+            <label for="slug">Slug: </label>
+                <input onkeydown="Mask.apply(event)" type="text" id="slug" name="slug" placeholder="Slug da Categoria" class="form-control">
+            <button type="submit" class="btn btn-success mt-4">Criar Categoria</button>
+        </form>
+    </div>
+</div>
