@@ -1,19 +1,25 @@
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
-require('../models/Users')
+require('../../models/Users')
 const Users = mongoose.model('users')
 const passport = require('passport')
 
 
 // ----------------------- functions ------------------------------------
 
-const dbManager = {
+const User = {
     register: (req, res) => {
         res.render('user/register')
     },
 
     login: (req, res) => {
         res.render('user/login')
+    },
+
+    logout: (req, res) => {
+        req.logout()
+        req.flash('success_msg', 'Deslogado com sucesso')
+        res.redirect('/')
     },
 
     loginUser: async (req, res, next) => {
@@ -87,4 +93,4 @@ const dbManager = {
     
 }
 
-module.exports = dbManager
+module.exports = User

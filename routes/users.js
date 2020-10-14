@@ -1,15 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const dbManager = require('./dbManagerUsers')
+const User = require('./controllers/usersController')
 
 // -------------------- Routes ---------------------------------------
 
 // get
-router.get('/register', dbManager.register)
-router.get('/login', dbManager.login)
+router.get('/register', User.register)
+router.get('/login', User.login)
+router.get('/logout', User.logout)
 
 // post
-router.post('/register', dbManager.registerNewUser)
-router.post('/login', dbManager.loginUser)
+router.post('/register', User.registerNewUser)
+router.post('/login', User.loginUser)
 
 module.exports = router;
