@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const dbManager = require('./controllers/adminController')
+const Categories = require('./controllers/categoryController')
+const Posts = require('./controllers/postsController')
 const { eAdmin } = require('../helpers/eAdmin')
 
 // -------------------- Routes ---------------------------------------
@@ -11,33 +12,33 @@ router.get('/', eAdmin, (req, res) => res.render('admin/index'))
 
 router.get('/categories/add', eAdmin, (req, res) => res.render('admin/addcategories'))
 
-router.get('/categories', eAdmin, dbManager.seachCategories)
+router.get('/categories', eAdmin, Categories.listCategories)
 
-router.get('/categories/edit/:id', eAdmin, dbManager.update)
+router.get('/categories/edit/:id', eAdmin, Categories.edit)
 
-router.get('/categories/delete/:id', eAdmin, dbManager.delete)
+router.get('/categories/delete/:id', eAdmin, Categories.destroy)
 
-router.get('/posts', eAdmin, dbManager.populateAll)
+router.get('/posts/add', eAdmin, Categories.listAllCategories)
 
-router.get('/posts/add', eAdmin, dbManager.findAllCategiries)
+router.get('/posts', eAdmin, Posts.listAllPost)
 
-router.get('/posts/edit/:id', eAdmin, dbManager.updatePost)
+router.get('/posts/edit/:id', eAdmin, Posts.edit)
 
-router.get('/post/delete/:id', eAdmin, dbManager.deletePost)
+router.get('/post/delete/:id', eAdmin, Posts.destroy)
 
 // post
 
-router.post('/categories/new', eAdmin, dbManager.createCategory)
+router.post('/categories/new', eAdmin, Categories.createCategory)
 
-router.post('/categories/edit', eAdmin, dbManager.updateCategory)
+router.post('/categories/edit', eAdmin, Categories.editCategory)
 
-router.post('/categories/delete', eAdmin, dbManager.deleteCategory)
+router.post('/categories/delete', eAdmin, Categories.destroyCategory)
 
-router.post('/posts/new', eAdmin, dbManager.createPost)
+router.post('/posts/new', eAdmin, Posts.createPost)
 
-router.post('/posts/edit', eAdmin, dbManager.updatePostdb)
+router.post('/posts/edit', eAdmin, Posts.editPost)
 
-router.post('/post/delete', eAdmin, dbManager.DeletePostdb)
+router.post('/post/delete', eAdmin, Posts.destroyPost)
 
 
 

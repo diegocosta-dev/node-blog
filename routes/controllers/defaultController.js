@@ -6,13 +6,13 @@ const Post = mongoose.model('Posts')
 
 // ----------------------- functions ------------------------------------
 
-const dbManager = {
+const Default = {
     renderIndex: async  (req, res) => {
         try {
 
             const posts = await Post.find().populate('category').sort({date: 'desc'}).lean()
             const categories = await Category.find().sort({name: 'asc'}).lean()
-            posts.forEach(item => {item.date = dbManager.formatDate(item.date)})
+            posts.forEach(item => {item.date = Default.formatDate(item.date)})
 
             if (categories) {
                 for (category in categories) {
@@ -31,7 +31,7 @@ const dbManager = {
     renderPost: async (req, res) => {
         try {
             const post = await Post.findOne({slug: req.params.slug}).populate('category')
-            const date = dbManager.formatDate(post.date)
+            const date = Default.formatDate(post.date)
             res.render('post', {post: post.toJSON(), date: date})
         } catch (err) {
             req.flash('error_msg', 'Erro ao listar o post!')
@@ -47,7 +47,7 @@ const dbManager = {
             if (category) {
 
                 const post = await Post.find({category: category._id}).sort({date: 'desc'}).lean()
-                post.forEach(item => {item.date = dbManager.formatDate(item.date)})
+                post.forEach(item => {item.date = Default.formatDate(item.date)})
                 res.render('posts', {post: post, categorie: category})
 
             }
@@ -74,4 +74,4 @@ const dbManager = {
 
 }
 
-module.exports = dbManager
+module.exports = Default

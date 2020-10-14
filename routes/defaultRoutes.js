@@ -1,14 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const router = express.Router()
-const dbManager = require('./controllers/defaultController')
+const Default = require('./controllers/defaultController')
 require('../models/Posts')
-const Post = mongoose.model('Posts')
 
 // -------------------- Routes ---------------------------------------
 
-router.get('/', dbManager.renderIndex)
-router.get('/post/:slug', dbManager.renderPost)
-router.get('/category/:slug', dbManager.goToCategory)
+router.get('/', Default.renderIndex)
+router.get('/post/:slug', Default.renderPost)
+router.get('/category/:slug', Default.goToCategory)
 
 module.exports = router;
