@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const dbManager = require('./dbManagerUsers')
+const dbManager = require('./controllers/usersController')
 
 // -------------------- Routes ---------------------------------------
 

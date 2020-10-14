@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-require('../models/Category')
-require('../models/Posts')
+require('../../models/Category')
+require('../../models/Posts')
 const Category = mongoose.model('Categories')
 const Post = mongoose.model('Posts')
-
 
 // ----------------------- functions ------------------------------------
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const dbManager = require('./dbManager')
+const dbManager = require('./controllers/adminController')
 const { eAdmin } = require('../helpers/eAdmin')
 
 // -------------------- Routes ---------------------------------------
@@ -11,7 +11,7 @@ router.get('/', eAdmin, (req, res) => res.render('admin/index'))
 
 router.get('/categories/add', eAdmin, (req, res) => res.render('admin/addcategories'))
 
-router.get('/categories', eAdmin, dbManager.findAll)
+router.get('/categories', eAdmin, dbManager.seachCategories)
 
 router.get('/categories/edit/:id', eAdmin, dbManager.update)
 

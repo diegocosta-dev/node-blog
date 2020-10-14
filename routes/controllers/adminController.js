@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-require('../models/Category')
-require('../models/Posts')
+require('../../models/Category')
+require('../../models/Posts')
 const Category = mongoose.model('Categories')
 const Post = mongoose.model('Posts')
 
@@ -54,7 +54,7 @@ const dbManager = {
         }
     },
 
-    findAll: async (req, res) => {
+    seachCategories: async (req, res) => {
         
         try {
 
