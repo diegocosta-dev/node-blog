@@ -7,8 +7,7 @@ const Post = mongoose.model('Posts')
 const Image = mongoose.model('Images')
 const fs = require('fs')
 const path = require('path')
-const { where } = require('../../models/Posts')
-
+const util = require('util')
 
 
 
@@ -151,15 +150,17 @@ const Posts = {
     },
 
     destroyImage: async (id) => {
-        const image = await Image.findOne({post: id})
+        const unlink = util.promisify(fs.unlink)
 
-        fs.unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`), (cb) => {
-            if(cb) {
-                console.log('Erro: ', cb)
-            }
-        })
-        
-        await Image.deleteOne({post: id})
+        try {
+            const image = await Image.findOne({post: id})
+            
+            await Image.deleteOne({post: id})
+
+            await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            
+        }
+        catch(err) {console.log('Erro ao deletar a imagem: ', err)}
     },
 
     formatDate: (date) => {
