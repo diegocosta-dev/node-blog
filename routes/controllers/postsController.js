@@ -42,23 +42,40 @@ const Posts = {
             }
 
             try{ 
-                const post = await new Post(newPost).save()
-                
+
+                const post = new Post(newPost)
+               
+
                 if (req.file) {
-                    const image = {
-                        name: req.file.filename,
-                        post: post._id
-                    }
+                    const re = /(?:\.([^.]+))?$/;
+                    const extension = re.exec(String(req.file.filename))[0];
+
+                    console.log(extension)
+
+                    if (extension === '.png' || extension === '.jpeg' || extension === '.jpg') {
+                        const image = {
+                            name: req.file.filename,
+                            post: post._id
+                        }
     
-                    await new Image(image).save()
+                        await new Image(image).save()
+                    }
+                    else {
+                        const unlink = util.promisify(fs.unlink)
+                        await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${req.file.filename}`))
+                        req.flash('error_msg', 'Tipo de arquivo não permitido!')
+                        throw new Error("Tipo de arquivo não permitido! ")
+                    }
+                    
                 }
+
+                await post.save()
                 
                 req.flash('success_msg', 'Poste criado com sucesso')
                 res.redirect('/admin/posts')
             }
             catch(err) {
-                console.log(err)
-                req.flash('error_msg', 'Erro ao criar o post tente novamente!')
+                req.flash('error_msg', 'Erro ao criar o post.')
                 res.redirect('/admin/posts')
             }
             
@@ -154,7 +171,7 @@ const Posts = {
 
         try {
             const image = await Image.findOne({post: id})
-            
+
             await Image.deleteOne({post: id})
 
             await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
