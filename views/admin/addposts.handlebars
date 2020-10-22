@@ -7,7 +7,7 @@
 <div class="card">
     <h5 class="card-header text-uppercase">Criar novo post</h5>
     <div class="card-body">
-        <form action="/admin/posts/new" method="POST">
+        <form action="/admin/posts/new" method="POST" enctype="multipart/form-data">
             <label for="name">Título: </label>
                 <input type="text" id="title" name="title" class="form-control">
             <label for="slug">Slug: </label>
@@ -16,8 +16,9 @@
                 <input type="text" id="description" name="description" class="form-control">
             <label for="content">Conteudo: </label>
                 <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
-
-            <label for="category"></label> 
+            <label style="margin: 5px 0; display:flex" for="image">Images: </label>
+                <input style="margin-bottom: 5px;" type="file" name="image" id="image"/>
+            <label style="margin: 5px 0; display:flex" for="category">Categoria: </label> 
             <select name="category" id="category" class="custom-select">
                 
                 {{#each categories}}

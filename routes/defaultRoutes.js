@@ -1,5 +1,4 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const router = express.Router()
 const Default = require('./controllers/defaultController')
 require('../models/Posts')
@@ -9,5 +8,4 @@ require('../models/Posts')
 router.get('/', Default.renderIndex)
 router.get('/post/:slug', Default.renderPost)
 router.get('/category/:slug', Default.goToCategory)
-
 module.exports = router;

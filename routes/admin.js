@@ -4,6 +4,12 @@ const Categories = require('./controllers/categoryController')
 const Posts = require('./controllers/postsController')
 const { eAdmin } = require('../helpers/eAdmin')
 
+const multer = require('multer')
+const storage = require('./controllers/imageUpload')
+const upload = multer({ storage: storage })
+
+
+
 // -------------------- Routes ---------------------------------------
 
 // get
@@ -34,7 +40,7 @@ router.post('/categories/edit', eAdmin, Categories.editCategory)
 
 router.post('/categories/delete', eAdmin, Categories.destroyCategory)
 
-router.post('/posts/new', eAdmin, Posts.createPost)
+router.post('/posts/new', eAdmin, upload.single('image'), Posts.createPost)
 
 router.post('/posts/edit', eAdmin, Posts.editPost)
 
