@@ -4,15 +4,17 @@
   "description": "This is a blog builded with nodejs, express and mongodb.",
   "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
     "express-session": "^1.17.1",
     "mongoose": "^5.10.7",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "passport": "^0.4.1"
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

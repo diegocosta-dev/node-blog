@@ -1,8 +1,14 @@
 const mongoose = require('mongoose')
 require('../../models/Category')
 require('../../models/Posts')
+require('../../models/Images')
 const Category = mongoose.model('Categories')
 const Post = mongoose.model('Posts')
+const Image = mongoose.model('Images')
+const fs = require('fs')
+const path = require('path')
+const util = require('util')
+
 
 
 // ----------------------- functions ------------------------------------
@@ -17,7 +23,6 @@ const Posts = {
         const verifySlug = !req.body.slug || typeof req.body.slug == undefined || req.body.slug == null
         const verifyContent = !req.body.content || typeof req.body.content == undefined || typeof req.body.content == null
         const verifyCategory = req.body.category == 0
-
         if (vertfyTitle) {error.push({text: 'Título inválido'})}
 
         if (verifySlug) {error.push({text: 'Slug inválido'})}
@@ -36,8 +41,18 @@ const Posts = {
                 category: req.body.category
             }
 
-            try{
-                await new Post(newPost).save()
+            try{ 
+                const post = await new Post(newPost).save()
+                
+                if (req.file) {
+                    const image = {
+                        name: req.file.filename,
+                        post: post._id
+                    }
+    
+                    await new Image(image).save()
+                }
+                
                 req.flash('success_msg', 'Poste criado com sucesso')
                 res.redirect('/admin/posts')
             }
@@ -51,7 +66,6 @@ const Posts = {
 
     },
     listAllPost : async (req, res) => {
-
         try {
 
             const posts = await Post.find().populate('category').sort({date: 'desc'}).lean()
@@ -116,7 +130,6 @@ const Posts = {
 
     destroy: async (req, res) => {
         const post = await Post.findOne({_id: req.params.id})
-        //console.log(post)
         res.render("admin/deletepost", {post: post.toJSON()})
     },
 
@@ -124,6 +137,8 @@ const Posts = {
         try {
 
             await Post.deleteOne({_id: req.body.id})
+            Posts.destroyImage(req.body.id)
+
             req.flash('success_msg', 'Poste deletado com sucesso')
             res.redirect('/admin/posts')
 
@@ -132,6 +147,20 @@ const Posts = {
             res.redirect('/admin/posts')
         }   
         
+    },
+
+    destroyImage: async (id) => {
+        const unlink = util.promisify(fs.unlink)
+
+        try {
+            const image = await Image.findOne({post: id})
+            
+            await Image.deleteOne({post: id})
+
+            await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            
+        }
+        catch(err) {console.log('Erro ao deletar a imagem: ', err)}
     },
 
     formatDate: (date) => {
