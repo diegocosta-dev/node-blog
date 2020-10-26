@@ -43,8 +43,6 @@ const Posts = {
             try{ 
 
                 const post = new Post(newPost)
-               
-                console.log(req.file)
                 
                 if (req.file) {
 
