@@ -3,6 +3,11 @@
 {{#each post}}
     <div class="card mb-5">
         <div class="card-body">
+            {{#if image}}
+                <div class="card mb-4">
+                    <img src="/uploads/{{image.name}}" class="card-img" alt="{{image.name}}">
+                </div>
+            {{/if}}
             <h6>{{title}}</h6>
             <p>{{description}}</p>
             <small class="d-block"><strong>Data: </strong>{{date}}</small>

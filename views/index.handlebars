@@ -9,11 +9,16 @@
 <hr>
 <div class="container">
   <div class="row">
-    <div class="col-sm p-2">
+    <div class="col-sm">
       <h4 class="card-header">Postagens recentes</h4>
       {{#each post}}
         <div class="shadow p-3 mb-5 bg-white rounded card mt-4 ">
             <div class="card-body">
+              {{#if image}}
+                <div class="card">
+                  <img src="/uploads/{{image}}" class="card-img" alt="{{image}}">
+                </div>
+              {{/if}}
               <h2 class="">{{title}}</h2>
               <p>{{description}}</p>
               <small class="d-block p-0 "><strong>Catetegoria:</strong> {{category.name}}</small>

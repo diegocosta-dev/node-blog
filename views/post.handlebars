@@ -1,6 +1,11 @@
 
 <div class="shadow p-3 mb-5 bg-white rounded card mt-4">
     <div class="card-body">
+      {{#if image}}
+        <div class="card">
+          <img src="/uploads/{{image.name}}" class="card-img" alt="{{image.name}}">
+        </div>
+      {{/if}}
       <h2 class="">{{post.title}}</h2>
       <p>{{post.content}}</p>
       <small class="d-block p-0 "><strong>Catetegoria:</strong> {{post.category.name}}</small>

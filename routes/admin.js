@@ -3,10 +3,8 @@ const router = express.Router()
 const Categories = require('./controllers/categoryController')
 const Posts = require('./controllers/postsController')
 const { eAdmin } = require('../helpers/eAdmin')
+const upload = require('./controllers/imageUpload')
 
-const multer = require('multer')
-const storage = require('./controllers/imageUpload')
-const upload = multer({ storage: storage })
 
 
 

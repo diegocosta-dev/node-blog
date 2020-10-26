@@ -10,7 +10,6 @@ const path = require('path')
 const util = require('util')
 
 
-
 // ----------------------- functions ------------------------------------
 
 const Posts = {
@@ -42,23 +41,27 @@ const Posts = {
             }
 
             try{ 
-                const post = await new Post(newPost).save()
+
+                const post = new Post(newPost)
                 
                 if (req.file) {
+
                     const image = {
                         name: req.file.filename,
                         post: post._id
                     }
-    
+
                     await new Image(image).save()
+                    
                 }
+
+                await post.save()
                 
                 req.flash('success_msg', 'Poste criado com sucesso')
                 res.redirect('/admin/posts')
             }
             catch(err) {
-                console.log(err)
-                req.flash('error_msg', 'Erro ao criar o post tente novamente!')
+                req.flash('error_msg', 'Erro ao criar o post.')
                 res.redirect('/admin/posts')
             }
             
@@ -69,8 +72,15 @@ const Posts = {
         try {
 
             const posts = await Post.find().populate('category').sort({date: 'desc'}).lean()
-
-            posts.forEach((item) => item.date = Posts.formatDate(item.date))
+            
+            posts.map(async (item) => {
+                item.date = Posts.formatDate(item.date)
+                const image = await Image.findOne({post: item._id})
+                if(image) {
+                    item.image = `${image.name}`
+                }
+                return item
+            })
 
             res.render('admin/posts', {posts: posts})
 
@@ -154,10 +164,11 @@ const Posts = {
 
         try {
             const image = await Image.findOne({post: id})
-            
-            await Image.deleteOne({post: id})
 
-            await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            if (image) {
+                await Image.deleteOne({post: id})
+                await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            }
             
         }
         catch(err) {console.log('Erro ao deletar a imagem: ', err)}
