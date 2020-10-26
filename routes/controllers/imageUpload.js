@@ -7,9 +7,22 @@ const storage  = multer.diskStorage({
     filename: (res, file, cb) => {
         const re = /(?:\.([^.]+))?$/;
         const extension = re.exec(file.originalname)[0];
-        const fileName = `${uuidv4()}-image.${extension}`
+        const fileName = `${uuidv4()}-image${extension}`
         cb(null, fileName)
     }
 })
 
-module.exports = storage
+const upload = multer({ storage: storage, fileFilter })
+
+function fileFilter (req, file, cb) {
+ 
+    const minitypes = ['image/jpeg', 'image/jpg', 'image/png']
+
+    if (minitypes.includes(file.mimetype)) {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+module.exports = upload

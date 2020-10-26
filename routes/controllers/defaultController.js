@@ -3,6 +3,7 @@ require('../../models/Category')
 require('../../models/Posts')
 const Category = mongoose.model('Categories')
 const Post = mongoose.model('Posts')
+const Image = mongoose.model('Images')
 
 // ----------------------- functions ------------------------------------
 
@@ -12,7 +13,14 @@ const Default = {
 
             const posts = await Post.find().populate('category').sort({date: 'desc'}).lean()
             const categories = await Category.find().sort({name: 'asc'}).lean()
-            posts.forEach(item => {item.date = Default.formatDate(item.date)})
+            posts.forEach( async (item) => {
+                item.date = Default.formatDate(item.date)
+                const image = await Image.findOne({post: item._id})
+                if (image) {
+                    item.image = `${image.name}`
+                }
+                
+            })
 
             if (categories) {
                 for (category in categories) {
@@ -32,7 +40,8 @@ const Default = {
         try {
             const post = await Post.findOne({slug: req.params.slug}).populate('category')
             const date = Default.formatDate(post.date)
-            res.render('post', {post: post.toJSON(), date: date})
+            const image = await Image.findOne({post: post._id}).lean()
+            res.render('post', {post: post.toJSON(), date: date, image: image})
         } catch (err) {
             req.flash('error_msg', 'Erro ao listar o post!')
             res.redirect('/')
@@ -47,7 +56,11 @@ const Default = {
             if (category) {
 
                 const post = await Post.find({category: category._id}).sort({date: 'desc'}).lean()
-                post.forEach(item => {item.date = Default.formatDate(item.date)})
+                post.map(async (item) => {
+                    item.date = Default.formatDate(item.date)
+                    item.image = await Image.findOne({post: item._id}).lean()
+                    return item
+                })
                 res.render('posts', {post: post, categorie: category})
 
             }

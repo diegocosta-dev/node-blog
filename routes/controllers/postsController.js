@@ -10,7 +10,6 @@ const path = require('path')
 const util = require('util')
 
 
-
 // ----------------------- functions ------------------------------------
 
 const Posts = {
@@ -45,27 +44,16 @@ const Posts = {
 
                 const post = new Post(newPost)
                
-
+                console.log(req.file)
+                
                 if (req.file) {
-                    const re = /(?:\.([^.]+))?$/;
-                    const extension = re.exec(String(req.file.filename))[0];
 
-                    console.log(extension)
+                    const image = {
+                        name: req.file.filename,
+                        post: post._id
+                    }
 
-                    if (extension === '.png' || extension === '.jpeg' || extension === '.jpg') {
-                        const image = {
-                            name: req.file.filename,
-                            post: post._id
-                        }
-    
-                        await new Image(image).save()
-                    }
-                    else {
-                        const unlink = util.promisify(fs.unlink)
-                        await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${req.file.filename}`))
-                        req.flash('error_msg', 'Tipo de arquivo não permitido!')
-                        throw new Error("Tipo de arquivo não permitido! ")
-                    }
+                    await new Image(image).save()
                     
                 }
 
@@ -86,8 +74,15 @@ const Posts = {
         try {
 
             const posts = await Post.find().populate('category').sort({date: 'desc'}).lean()
-
-            posts.forEach((item) => item.date = Posts.formatDate(item.date))
+            
+            posts.map(async (item) => {
+                item.date = Posts.formatDate(item.date)
+                const image = await Image.findOne({post: item._id})
+                if(image) {
+                    item.image = `${image.name}`
+                }
+                return item
+            })
 
             res.render('admin/posts', {posts: posts})
 
@@ -172,9 +167,10 @@ const Posts = {
         try {
             const image = await Image.findOne({post: id})
 
-            await Image.deleteOne({post: id})
-
-            await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            if (image) {
+                await Image.deleteOne({post: id})
+                await unlink(path.join(__dirname, '..', '..', 'public', 'uploads', `${image.name}`))
+            }
             
         }
         catch(err) {console.log('Erro ao deletar a imagem: ', err)}
