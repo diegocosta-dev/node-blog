@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
-require('../../models/Users')
+require('../models/Users')
+
 const Users = mongoose.model('users')
 const passport = require('passport')
 
