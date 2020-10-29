@@ -2,16 +2,19 @@
     const express = require('express');
     const handleBars = require('express-handlebars');
     const bodyParser = require('body-parser');
-    const app = express();
     const path = require('path')
-    const admin = require('./routes/admin')
-    const defaultRoutes = require('./routes/defaultRoutes.js')
-    const users = require('./routes/users')
     const mongoose = require('mongoose');
     const session = require('express-session')
     const flash = require('connect-flash')
     const passport = require('passport')
+    const admin = require('./routes/admin')
+    const defaultRoutes = require('./routes/defaultRoutes.js')
+    const users = require('./routes/users')
+    
     require('./config/auth')(passport)
+
+    const app = express();
+    
 
 // configs
 

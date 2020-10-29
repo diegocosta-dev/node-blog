@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Default = require('./controllers/defaultController')
+const Default = require('../controllers/defaultController')
 require('../models/Posts')
 
 // -------------------- Routes ---------------------------------------
